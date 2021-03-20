@@ -1,0 +1,12 @@
+{
+  "configData": [
+    {
+      "name": "SearchBlock",
+      "place": "left-col"
+    },
+    {
+      "name": "ItemsList",
+      "place": "right-col"
+    }
+  ]
+}
