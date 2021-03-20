@@ -1,0 +1,14 @@
+{
+  "configData": [
+    {
+      "id": "f4fj7s13",
+      "name": "SearchBlock",
+      "place": "left-col"
+    },
+    {
+      "id": "h2f6fh52",
+      "name": "Map",
+      "place": "right-col"
+    }
+  ]
+}
