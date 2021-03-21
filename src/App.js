@@ -9,12 +9,6 @@ const importModule = moduleName =>
   );
 
 
-const ModuleList = ({ modules }) =>
-  Object.values(modules).map(Module => (
-    <Module className="col" key={shortid.generate()} />
-  ));
-
-
 export default function App() {
 
   const [modules, setModules] = useState({});
@@ -22,11 +16,12 @@ export default function App() {
 
   const addModules = modulesData => {
     if(modulesData){
+      setModules({});
       modulesData.forEach(el=>{
-        if (modules[el.name]) return;
+        //if (modules[el.name]) return;
         let Module = importModule(el.name);
+        //console.log(Module);
         setModules(modules => ({ ...modules, [el.name]: Module}));
-        //setModules(modules => ({[el.name]: Module}));
       });
     }
     setLoading( false);
@@ -45,10 +40,22 @@ export default function App() {
     })
   }
 
+  const ModuleList = ({ modules }) =>
+    Object.values(modules).map(Module => {
+      return (
+        <Module key={shortid.generate()} />
+      )
+    });
+
+  const loadingFallback = (
+    <div className='text-center my-5'>
+      Загрузка конфигурации <span className='spinner-border spinner-border-sm'/>
+    </div>
+  );
 
   return (
     <main>
-      <section className="container my-3">
+      <section className="container my-3 text-center">
         <button className='btn btn-primary mr-3' onClick={()=>loadConfig('/config1.json')}>
           Загрузить конфигурацию 1
         </button>
@@ -57,12 +64,10 @@ export default function App() {
         </button>
       </section>
       {loading
-        ? (
-          <div className='text-center my-4'>Загрузка конфигурации</div>
-        )
+        ? loadingFallback
         : (
           <section className="container my-3">
-            <React.Suspense fallback="Загрузка конфигурации">
+            <React.Suspense fallback={loadingFallback}>
               <div className="row">
                 <ModuleList modules={modules} />
               </div>
