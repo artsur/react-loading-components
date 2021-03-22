@@ -33,12 +33,15 @@ export default function App() {
   }
 
   const loadConfig = (configUrl) => {
+    setErrorLoading(false);
     setLoading( true);
     axios.get(configUrl).then(resp=>{
-      if(resp.data && resp.data.configData && Array.isArray(resp.data.configData)){
-        setConfigData(resp.data.configData);
-        addModules(resp.data.configData);
-      }
+      setTimeout(()=>{
+        if(resp.data && resp.data.configData && Array.isArray(resp.data.configData)){
+          setConfigData(resp.data.configData);
+          addModules(resp.data.configData);
+        }
+      },1000);
     }).catch(err=>{
       setErrorLoading(true);
     })
@@ -90,19 +93,23 @@ export default function App() {
       {errorLoading
         ? errorLoadingMessage
         : (
-          <section className="container my-3">
-            <React.Suspense fallback={loadingFallback}>
-              <div className="row">
-                <div className='col-12 col-md-6'>
-                  <ModuleList modules={modules} place='left-col' />
-                </div>
-                <div className='col-12 col-md-6'>
-                  <ModuleList modules={modules} place='right-col' />
-                </div>
+          loading
+          ? loadingFallback
+          : (
+            <section className="container my-3">
+              <React.Suspense fallback={loadingFallback}>
+                <div className="row">
+                  <div className='col-12 col-md-6'>
+                    <ModuleList modules={modules} place='left-col' />
+                  </div>
+                  <div className='col-12 col-md-6'>
+                    <ModuleList modules={modules} place='right-col' />
+                  </div>
 
-              </div>
-            </React.Suspense>
-          </section>
+                </div>
+              </React.Suspense>
+            </section>
+            )
         )
       }
 
