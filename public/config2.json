@@ -1,6 +1,10 @@
 {
   "configData": [
     {
+      "name": "RoundButton",
+      "place": "left-col"
+    },
+    {
       "name": "SearchBlock",
       "place": "left-col"
     },

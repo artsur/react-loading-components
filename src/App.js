@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const importModule = moduleName =>
   lazy(() =>
-    import(`./modules/${moduleName}`).catch(err=>{console.log(err)})
+    import(`./components/${moduleName}`).catch(err=>{ console.log(err)})
   );
 
 
@@ -13,6 +13,7 @@ export default function App() {
 
   const [modules, setModules] = useState({});
   const [loading, setLoading] = useState(false);
+  const [errorLoading, setErrorLoading] = useState(false);
 
   const addModules = modulesData => {
     if(modulesData){
@@ -36,7 +37,7 @@ export default function App() {
         }
       },1000);
     }).catch(err=>{
-
+      setErrorLoading(true);
     })
   }
 
@@ -56,10 +57,10 @@ export default function App() {
   return (
     <main>
       <section className="container my-3 text-center">
-        <button className='btn btn-primary mr-3' onClick={()=>loadConfig('/config1.json')}>
+        <button className='btn btn-primary mx-3' onClick={()=>loadConfig('/config1.json')}>
           Загрузить конфигурацию 1
         </button>
-        <button className='btn btn-primary mr-3' onClick={()=>loadConfig('/config2.json')}>
+        <button className='btn btn-primary mx-3' onClick={()=>loadConfig('/config2.json')}>
           Загрузить конфигурацию 2
         </button>
       </section>
